@@ -4,6 +4,10 @@ import ProfileCard from './components/ProfileCard';
 import RepoList from './components/RepoList';
 import LanguageChart from './components/LanguageChart';
 import ContributionGraph from './components/ContributionGraph';
+import TopContributors from './components/TopContributors';
+import RecentActivity from './components/RecentActivity';
+import TrendingRepos from './components/TrendingRepos';
+import TrendingProfiles from './components/TrendingProfiles';
 import { getUserStats } from './api/github';
 import './index.css';
 
@@ -99,15 +103,28 @@ export default function App() {
             </div>
 
             <ContributionGraph repos={repos} />
+
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+              <TopContributors repos={repos} />
+              <RecentActivity username={userData.login} />
+            </div>
           </div>
         )}
 
-        {/* Empty State */}
+        {/* Empty State - Show Trending */}
         {!userData && !isLoading && !error && (
-          <div className="text-center py-20">
-            <div className="text-6xl mb-4">👤</div>
-            <p className="text-[#8b949e] text-lg">Search for a GitHub user to get started</p>
-            <p className="text-[#8b949e] text-sm mt-2">Enter a username above to visualize their profile</p>
+          <div className="space-y-12">
+            <div className="text-center py-20">
+              <div className="text-6xl mb-4">👤</div>
+              <p className="text-[#8b949e] text-lg">Search for a GitHub user to get started</p>
+              <p className="text-[#8b949e] text-sm mt-2">Enter a username above to visualize their profile</p>
+            </div>
+
+            {/* Trending Section */}
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+              <TrendingRepos />
+              <TrendingProfiles />
+            </div>
           </div>
         )}
       </div>
