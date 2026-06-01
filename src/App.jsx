@@ -30,42 +30,92 @@ export default function App() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 py-8 px-4">
-      <div className="max-w-6xl mx-auto">
-        <div className="text-center mb-12">
-          <h1 className="text-4xl font-bold text-gray-800 mb-2">GitHub Profile Visualizer</h1>
-          <p className="text-gray-600">Enter a GitHub username to visualize their profile stats</p>
+    <div className="min-h-screen bg-[#0d1117] text-[#c9d1d9]">
+      {/* Header */}
+      <header className="border-b border-[#30363d] sticky top-0 z-50 bg-[#0d1117]/95 backdrop-blur-md">
+        <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
+          <div className="flex items-center gap-2">
+            <div className="w-8 h-8 bg-gradient-to-br from-blue-500 to-blue-600 rounded-lg flex items-center justify-center">
+              <span className="text-white font-bold text-sm">GH</span>
+            </div>
+            <h1 className="text-xl font-bold bg-gradient-to-r from-blue-400 to-blue-600 bg-clip-text text-transparent">
+              Profile Visualizer
+            </h1>
+          </div>
+          <a
+            href="https://github.com/tanishk13-devops/github-profile-visualizer"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-sm text-[#8b949e] hover:text-[#c9d1d9] transition"
+          >
+            ★ Star on GitHub
+          </a>
+        </div>
+      </header>
+
+      {/* Main Content */}
+      <div className="max-w-7xl mx-auto px-6 py-12">
+        {/* Hero Section */}
+        <div className="text-center mb-12 animate-in">
+          <h2 className="text-5xl font-bold mb-4 bg-gradient-to-r from-blue-400 via-blue-500 to-blue-600 bg-clip-text text-transparent">
+            Visualize GitHub Profiles
+          </h2>
+          <p className="text-[#8b949e] text-lg mb-8 max-w-2xl mx-auto">
+            Search any GitHub username and explore their contributions, repositories, languages, and statistics in beautiful interactive charts.
+          </p>
+
+          <SearchBar onSearch={handleSearch} isLoading={isLoading} />
         </div>
 
-        <SearchBar onSearch={handleSearch} isLoading={isLoading} />
-
+        {/* Error Alert */}
         {error && (
-          <div className="max-w-md mx-auto mb-4 p-4 bg-red-100 border border-red-400 text-red-700 rounded">
-            {error}
+          <div className="max-w-2xl mx-auto mb-8 p-4 bg-[#da3633]/10 border border-[#da3633]/50 text-[#f85149] rounded-lg animate-in">
+            <span className="font-semibold">Error:</span> {error}
           </div>
         )}
 
+        {/* Loading State */}
         {isLoading && (
-          <div className="text-center py-8">
-            <p className="text-gray-600">Loading profile...</p>
+          <div className="text-center py-16">
+            <div className="inline-flex items-center gap-3">
+              <div className="w-3 h-3 bg-blue-500 rounded-full animate-pulse"></div>
+              <p className="text-[#8b949e]">Loading profile...</p>
+            </div>
           </div>
         )}
 
+        {/* Results */}
         {userData && (
-          <>
+          <div className="space-y-12 animate-in">
             <ProfileCard user={userData} />
-            <RepoList repos={repos} />
-            <LanguageChart repos={repos} />
+            
+            <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+              <div className="lg:col-span-2">
+                <RepoList repos={repos} />
+              </div>
+              <div>
+                <LanguageChart repos={repos} />
+              </div>
+            </div>
+
             <ContributionGraph repos={repos} />
-          </>
+          </div>
         )}
 
+        {/* Empty State */}
         {!userData && !isLoading && !error && (
-          <div className="text-center py-12 text-gray-500">
-            <p>Search for a GitHub user to get started</p>
+          <div className="text-center py-20">
+            <div className="text-6xl mb-4">👤</div>
+            <p className="text-[#8b949e] text-lg">Search for a GitHub user to get started</p>
+            <p className="text-[#8b949e] text-sm mt-2">Enter a username above to visualize their profile</p>
           </div>
         )}
       </div>
+
+      {/* Footer */}
+      <footer className="border-t border-[#30363d] mt-20 py-8 text-center text-[#8b949e] text-sm">
+        <p>Made with ❤️ by <a href="https://github.com/tanishk13-devops" className="text-blue-400 hover:text-blue-300">Tanishk Jaiswal</a></p>
+      </footer>
     </div>
   );
 }
